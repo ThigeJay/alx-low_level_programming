@@ -1,11 +1,2 @@
 #!/bin/bash
-if [ -z "$CFILE" ]; then
-  echo "Please set the \$CFILE variable to the name of the C file."
-  exit 1
-fi
-filename=$(basename "$CFILE" .c)
-gcc -S -masm=intel "$CFILE" -o "$filename.s" 2>/dev/null
-if [ $? -ne 0 ]; then
-  echo "Failed to generate assembly code."
-  exit 1
-fi
+gcc -S -masm=intel "$CFILE" -o "$filename.s"
