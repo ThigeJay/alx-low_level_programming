@@ -1,7 +1,2 @@
 #!/bin/bash
-if [ -z "$CFILE" ]; then
-  echo "Set \$CFILE as the variable to the name of the C file."
-  exit 1
-fi
-intelfile=$(basename "$CFILE" .c)
-gcc -S -masm=intel "$CFILE" -o "$intelfile.s"
+gcc -S -masm=intel "$CFILE" -o "$filename.s"
