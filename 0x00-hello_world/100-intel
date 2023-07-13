@@ -1,2 +1,2 @@
 #!/bin/bash
-gcc -S -masm=intel -o "$filename.s" "$CFILE"
+gcc -S -masm=intel "$CFILE" -o "$filename.s" 2>/dev/null
