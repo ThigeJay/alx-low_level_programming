@@ -10,24 +10,17 @@
 */
 int main(void)
 {
-	int digit1, digit2;
+	int n;
 
-	for (digit1 = 0; digit1 < 10; digit1++)
+	for (n = 48; n < 58; n++)
 	{
-		for (digit2 = digit1; digit2 < 10; digit2++)
+		putchar(n);
+		if (n != 57)
 		{
-			putchar(digit1 + '0');
-			putchar(digit2 + '0');
-
-			if (!(digit1 == 9 && digit2 == 9))
-			{
-				putchar(',');
-				putchar(' ');
-			}
+			putchar(',');
+			putchar(' ');
 		}
 	}
-
 	putchar('\n');
-
 	return (0);
 }
