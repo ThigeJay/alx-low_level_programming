@@ -1,4 +1,4 @@
-#inlude < main.h >
+#include "main.h"
 /**
  * print_alphabet -program entry
  * Description: print_alphabet program to print alphabrts,in lowercase.
