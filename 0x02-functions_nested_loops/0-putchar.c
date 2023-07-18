@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <main.h>
+#include "main.h"
 
 /**
  * main - entry point of program
@@ -19,3 +19,4 @@ int main(void)
 	}
 	return (0);
 }
+
