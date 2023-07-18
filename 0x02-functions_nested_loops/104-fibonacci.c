@@ -1,11 +1,11 @@
 #include <stdio.h>
 
 /**
- * main - fibonacci <3
+ * main - entry point of program
  *
- * Purpose - no hardcode
+ * Description: prints the first 98 Fibonacci numbers
  *
- * Return:  (Success)
+ * Return:  0 on Success.
  */
 
 int main(void)
