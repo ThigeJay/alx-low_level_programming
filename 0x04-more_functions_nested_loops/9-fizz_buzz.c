@@ -1,75 +1,39 @@
 #include "main.h"
-
-#define FIZZ "Fizz"
-#define BUZZ "Buzz"
-#define FIZZ_BUZZ "FizzBuzz"
-
-void _putchar(char c); /* Function to print a single character */
+#include <stdio.h>
 
 /**
- * main - prints the numbers from 1 to 100, followed by a new line
- * for multiples of three, prints Fizz
- * and for the multiples of five, prints Buzz
- * Return: Always 0 (Success)
+ * main - entry point of the program
+ * Description: program prints numbers from 1 to 100,
+ * followed by a new line.
+ * For multiples of 3 it prints Fizz.
+ * For multiples of 5 it prints Buzz
+ * In neither, it prints the number itself.
+ * Return: 0 on sucess.
  */
 int main(void)
 {
-    int i;
+	int x;
 
-    for (i = 1; i <= 100; i++)
-    {
-        if (i % 15 == 0)
-        {
-            for (int j = 0; FIZZ_BUZZ[j]; j++)
-                _putchar(FIZZ_BUZZ[j]);
-        }
-        else if (i % 3 == 0)
-        {
-            for (int j = 0; FIZZ[j]; j++)
-                _putchar(FIZZ[j]);
-        }
-        else if (i % 5 == 0)
-        {
-            for (int j = 0; BUZZ[j]; j++)
-                _putchar(BUZZ[j]);
-        }
-        else
-        {
-            int num = i;
-            if (num == 0)
-                _putchar('0');
-            else
-            {
-                if (num < 0)
-                {
-                    _putchar('-');
-                    num = -num;
-                }
+	for (x = 1; x <= 100; x++)
+	{
+		if (x % 3 == 0 && x % 5 != 0)
+		{
+			printf(" Fizz");
+		} else if (x % 5 == 0 && x % 3 != 0)
+		{
+			printf(" Buzz");
+		} else if (x % 3 == 0 && x % 5 == 0)
+		{
+			printf(" FizzBuzz");
+		} else if (x == 1)
+		{
+			printf("%d", x);
+		} else
+		{
+			printf(" %d", x);
+		}
+	}
+	printf("\n");
 
-                char num_str[12]; /* Maximum length of an integer string */
-                int idx = 0;
-
-                while (num != 0)
-                {
-                    num_str[idx++] = '0' + (num % 10);
-                    num /= 10;
-                }
-
-                for (int j = idx - 1; j >= 0; j--)
-                    _putchar(num_str[j]);
-            }
-        }
-
-        if (i < 100)
-            _putchar(' ');
-    }
-
-    _putchar('\n');
-
-    return (0);
-}
-
-void _putchar(char c)
-{
-    putchar(c);
+	return (0);
 }
