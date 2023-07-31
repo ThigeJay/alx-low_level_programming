@@ -1,25 +1,56 @@
-#include <main.h>
+#include "main.h"
+
 /**
- * print_diagsums - Prints the sum of the two diagonals
- * @a: The pointer to the square matrix.
- * @size: The size of the matrix.
+ * print_number - prints an integer in standard output
+ * @n: the integer to be printed.
+ */
+void print_number(int n)
+{
+	char num_str[12] = {0};
+	int i = 0;
+	unsigned int abs_n = n < 0 ? -n : n;
+
+	if (n < 0)
+		_putchar('-');
+
+	do {
+		num_str[i++] = (abs_n % 10) + '0';
+		abs_n /= 10;
+	} while (abs_n);
+
+	while (i--)
+		_putchar(num_str[i]);
+}
+
+/**
+ * print_diagsums - sum of the two diagonals.
+ * @a: pointer.
+ * @size: the matrix.
  */
 void print_diagsums(int *a, int size)
 {
-	int sum1, sum2, y;
+	int i, sum1 = 0, sum2 = 0;
 
-	sum1 = 0;
-	sum2 = 0;
-
-	for (y = 0; y < size; y++)
+	for (i = 0; i < size; i++)
 	{
-		sum1 = sum1 + a[y * size + y];
+		sum1 += a[i * size + i];
+		sum2 += a[i * size + (size - i - 1)];
 	}
 
-	for (y = size - 1; y >= 0; y--)
-	{
-		sum2 += a[y * size + (size - y - 1)];
-	}
+	print_number(sum1);
+	_putchar(',');
+	_putchar(' ');
+	print_number(sum2);
+	_putchar('\n');
+}
 
-	printf("%d, %d\n", sum1, sum2);
+/**
+ * _putchar - character in std output.
+ * @c: character to be written
+ *
+ * Return: 1 on success, -1 on error
+ */
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
 }
