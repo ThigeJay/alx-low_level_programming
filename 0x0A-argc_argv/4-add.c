@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * main - Entry; multiplies two numbers passed as arguments.
+ * main - Entry; adds positive numbers passed as arguments.
  * atoi - converts a string to an integer
  * @argc: Number of arguments passed.
  * @argv: Array of arguments.
