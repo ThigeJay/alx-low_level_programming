@@ -5,7 +5,6 @@
  * str_concat - concatenates two strings
  * @s1: the first string
  * @s2: the second string
- * 
  * This function concatenates two strings by creating a new string,
  * allocating enough memory to hold both input strings and a null terminator.
  * If either of the input strings is NULL, it treats it as an empty string.
