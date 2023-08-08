@@ -29,29 +29,6 @@ int count_word(char *s)
 }
 
 /**
- * allocate_memory - allocates memory and handles errors
- * @matrix: double pointer to matrix
- * @c: length of string
- * @y: index
- *
- * Return: allocated memory
- */
-char *allocate_memory(char **matrix, int c, int y)
-{
-	char *tmp = (char *) malloc(sizeof(char) * (c + 1));
-
-	if (tmp == NULL)
-	{
-		for (int x = 0; x < y; x++) //Free previously allocated memory
-			free(matrix[x]);
-		free(matrix);
-		return (NULL);
-	}
-
-	return tmp;
-}
-
-/**
  * **strtow - splits a string into words
  * @str: string to split
  *
@@ -80,9 +57,14 @@ char **strtow(char *str)
 			if (c)
 			{
 				end = x;
-				tmp = allocate_memory(matrix, c, y);
+				tmp = (char *) malloc(sizeof(char) * (c + 1));
 				if (tmp == NULL)
+				{
+					for (x = 0; x < y; x++) /*Free previously allocated memory*/
+						free(matrix[x]);
+					free(matrix);
 					return (NULL);
+				}
 				while (start < end)
 					*tmp++ = str[start++];
 				*tmp = '\0';
