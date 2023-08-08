@@ -42,13 +42,13 @@ char *allocate_memory(char **matrix, int c, int y)
 
 	if (tmp == NULL)
 	{
-		for (int x = 0; x < y; x++) /*Free previously allocated memory*/
+		for (int x = 0; x < y; x++) //Free previously allocated memory
 			free(matrix[x]);
 		free(matrix);
 		return (NULL);
 	}
 
-	return (tmp);
+	return tmp;
 }
 
 /**
