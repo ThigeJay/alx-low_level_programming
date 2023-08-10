@@ -2,33 +2,49 @@
 #include "main.h"
 
 /**
- * array_range - Creates an array of integers from min to max inclusive.
- * @min: The starting value of the range of integers.
- * @max: The ending value of the range of integers.
+ * _memset - Fills the first 'n' bytes of the memory area pointed to by 's'
+ * with the constant byte 'b'.
+ * @s: Pointer to the memory area to be filled.
+ * @b: The constant byte to set.
+ * @n: Number of bytes to be set to the value 'b'.
  *
- * If min is > max, return NULL.
- *
- * Return: A pointer to the newly allocated array.
- * return NULL if memory allocation fails or
- * min is greater than max
+ * Return: A pointer to the filled memory area 's'.
  */
-int *array_range(int min, int max)
+char *_memset(char *s, char b, unsigned int n)
 {
-	int *int_array;
-	int i, array_size;
+	unsigned int idx;
 
-	if (min > max)
+	for (idx = 0; idx < n; idx++)
+	{
+		s[idx] = b;
+	}
+
+	return (s);
+}
+
+/**
+ * _calloc - Allocates memory for an array, and initializes all bytes to zero.
+ * @nmemb: Number of elements in the array.
+ * @size: Size in bytes of each element.
+ *
+ * If nmemb or size is 0, the function returns NULL.
+ *
+ * Return: A pointer to the allocated memory, initialized to zero.
+ * Returns NULL if memory allocation fails.
+ */
+void *_calloc(unsigned int nmemb, unsigned int size)
+{
+	char *allocated_mem;
+
+	if (nmemb == 0 || size == 0)
 		return (NULL);
 
-	array_size = max - min + 1;
+	allocated_mem = malloc(size * nmemb);
 
-	int_array = malloc(sizeof(int) * array_size);
-
-	if (int_array == NULL)
+	if (allocated_mem == NULL)
 		return (NULL);
 
-	for (i = 0; min <= max; i++)
-		int_array[i] = min++;
+	_memset(allocated_mem, 0, nmemb * size);
 
-	return (int_array);
+	return (allocated_mem);
 }
