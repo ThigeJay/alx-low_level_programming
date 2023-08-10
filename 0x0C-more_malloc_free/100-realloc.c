@@ -2,13 +2,17 @@
 #include "main.h"
 
 /**
- * is_digit - Check if a string consists numeric characters.
- * @str: The string to evaluate.
- * @ptr: pointer to the memory previsouly allocated by malloc
- * @old_size: size of the allocated memory for ptr
- * @new_size: new size of the new memory block
+ * _realloc - Reallocates a memory block using malloc and free.
  *
- * Return: 1 if the string contains only digits, 0 otherwise.
+ * acts just like standard library's realloc.
+ *
+ * @ptr: Pointer to the previously allocated memory (can be NULL).
+ * @old_size: Size (in bytes) of the previously allocated memory.
+ * @new_size: Desired size (in bytes) for the new memory block.
+ *
+ * Return: Pointer to he newly allocated memory blockd
+ * memory block preserved. Returns NULL if the new memory allocation fails.
+ * If new_size is the same as old_size, the original pointer is returned.
  */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
