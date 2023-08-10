@@ -1,49 +1,125 @@
-#include <stdlib.h>
 #include "main.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+#define ERR_MSG "Error"
 
 /**
- * _realloc - Reallocates a memory block using malloc and free.
- * @ptr: Pointer to the previously allocated memory.
- * @old_size: Size in bytes of the previously allocated memory.
- * @new_size: Size in bytes of the new memory block.
+ * is_digit - Check if a string consists numeric characters.
+ * @str: The string to evaluate.
  *
- *  behaves like standard library's realloc function.
- * If new_size equals old_size,function returns 'ptr'(original pointer)
- * If new_size is 0 and ptr is not NULL,free it and retur NULL
- * If ptr is NULL, the function behaves like malloc.
- *
- * Return: Pointer to the newly allocated memory block.
- * return NULL on failure. Returns ptr if new_size equals old_size.
+ * Return: 1 if the string contains only digits, 0 otherwise.
  */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+int is_digit(char *str)
 {
-	char *new_mem;
-	char *src_mem;
-	unsigned int i;
+	int index = 0;
 
-	if (new_size == old_size)
-		return (ptr);
-
-	if (new_size == 0 && ptr)
+	while (str[index])
 	{
-		free(ptr);
-		return (NULL);
+		if (str[index] < '0' || str[index] > '9')
+			return (0);
+		index++;
 	}
+	return (1);
+}
 
-	if (!ptr)
-		return (malloc(new_size));
+/**
+ * string_length - Compute the length of a string.
+ * @str: The string whose length is to be determined.
+ *
+ * Return: The number of characters in the string
+ * excluding the terminating NULL character
+ */
+int string_length(char *str)
+{
+	int length = 0;
 
-	new_mem = malloc(new_size);
-	if (!new_mem)
-		return (NULL);
+	while (str[length] != '\0')
+		length++;
 
-	src_mem = ptr;
+	return (length);
+}
 
-	unsigned int bytes_to_copy = (new_size < old_size) ? new_size : old_size;
-	for (i = 0; i < bytes_to_copy; i++)
+/**
+ * print_error_and_exit - Prints an error message and exits the program.
+ */
+void print_error_and_exit(void)
+{
+	printf("Error\n");
+	exit(98);
+}
 
-		new_mem[i] = src_mem[i];
+/**
+ * multiply_numbers - Multiplies two positive numbers
+ * @num1: First number as a string.
+ * @num2: Second number as a string.
+ * @product: Resultant product array.
+ */
+void multiply_numbers(char *num1, char *num2, int *product)
+{
+	int len_str1, len_str2, carry, num1_digit, num2_digit, i;
 
-	free(ptr);
-	return (new_mem);
+	len_str1 = string_length(num1);
+	len_str2 = string_length(num2);
+
+	for (len_str1--; len_str1 >= 0; len_str1--)
+	{
+		num1_digit = num1[len_str1] - '0';
+		carry = 0;
+
+		for (len_str2 = string_length(num2) - 1; len_str2 >= 0; len_str2--)
+		{
+			num2_digit = num2[len_str2] - '0';
+			carry += product[len_str1 + len_str2 + 1] + (num1_digit * num2_digit);
+			product[len_str1 + len_str2 + 1] = carry % 10;
+			carry /= 10;
+		}
+		if (carry > 0)
+			product[len_str1 + len_str2 + 1] += carry;
+	}
+}
+
+/**
+ * main - Entry point. Multiplies two positive numbers passed as strings.
+ * @argc: The number of arguments passed to the program.
+ * @argv: Array containing the arguments passed to the program.
+ *
+ * Takes two numeric strings as arguments, multiplies
+ * the numbers and prints the result.
+ * Return: 0 if the program executed successfully, 1 if there's an error.
+ */
+int main(int argc, char *argv[])
+{
+	char *num_str1, *num_str2;
+	int total_length, i, *product, is_nonzero_found = 0;
+
+	if (argc != 3 || !is_digit(argv[1]) || !is_digit(argv[2]))
+		print_error_and_exit();
+
+	num_str1 = argv[1];
+	num_str2 = argv[2];
+
+	total_length = string_length(num_str1) + string_length(num_str2) + 1;
+	product = malloc(sizeof(int) * total_length);
+	if (!product)
+		return (1);
+
+	for (i = 0; i <= total_length; i++)
+		product[i] = 0;
+
+	multiply_numbers(num_str1, num_str2, product);
+
+	for (i = 0; i < total_length - 1; i++)
+	{
+		if (product[i])
+			is_nonzero_found = 1;
+		if (is_nonzero_found)
+			_putchar(product[i] + '0');
+	}
+	if (!is_nonzero_found)
+		_putchar('0');
+
+	_putchar('\n');
+	free(product);
+	return (0);
 }

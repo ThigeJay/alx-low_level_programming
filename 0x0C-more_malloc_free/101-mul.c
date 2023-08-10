@@ -5,116 +5,109 @@
 #define ERR_MSG "Error"
 
 /**
- * contains_only_digits - Check if a string consists
- * solely of digit characters.
- * @str: The string to check.
+ * is_digit - Check if a string consists only of numerals
+ * @str: The string to evaluate.
  *
  * Return: 1 if the string contains only digits, 0 otherwise.
  */
-int contains_only_digits(char *str)
+int is_digit(char *str)
 {
-	int i = 0;
+	int index = 0;
 
-	while (str[i])
+	while (str[index])
 	{
-		if (str[i] < '0' || str[i] > '9')
+		if (str[index] < '0' || str[index] > '9')
 			return (0);
-		i++;
+		index++;
 	}
 	return (1);
 }
 
 /**
- * string_length - Computes the length of a string.
- * @str: The string to measure.
+ * _strlen - Compute the length of a string.
+ * @str: The string whose length is to be determined.
  *
- * Return: The length of the string.
+ * Return: The number of characters in the string
+ * (excluding the terminating NULL character).
  */
-int string_length(char *str)
+int _strlen(char *str)
 {
-	int i = 0;
+	int length = 0;
 
-	while (str[i] != '\0')
-		i++;
-
-	return (i);
+	while (str[length] != '\0')
+	{
+		length++;
+	}
+	return (length);
 }
 
 /**
- * print_error_and_exit - Print an error message and then exit the program.
+ * errors - Prints an error message and exits the program.
  */
-void print_error_and_exit(void)
+void errors(void)
 {
 	printf("Error\n");
 	exit(98);
 }
 
 /**
- * multiply_numbers - Multiplies two positive numbers represented as strings.
- * @num1: First number as a string.
- * @num2: Second number as a string.
- * @product: Resultant product array.
- */
-void multiply_numbers(char *num1, char *num2, int *product)
-{
-	int len1, len2, carry, digit1, digit2, i;
-
-	len1 = string_length(num1);
-	len2 = string_length(num2);
-
-	for (len1 = len1 - 1; len1 >= 0; len1--)
-	{
-		digit1 = num1[len1] - '0';
-		carry = 0;
-		for (len2 = string_length(num2) - 1; len2 >= 0; len2--)
-		{
-			digit2 = num2[len2] - '0';
-			carry += product[len1 + len2 + 1] + (digit1 * digit2);
-			product[len1 + len2 + 1] = carry % 10;
-			carry /= 10;
-		}
-		if (carry > 0)
-			product[len1 + len2 + 1] += carry;
-	}
-}
-
-/**
- * main - Entry point. Multiplies two positive numbers passed as strings.
- * @argc: The number of command-line arguments.
- * @argv: The command-line arguments.
+ * main - Multiplies two positive numbers represented as strings.
+ * @argc: The number of arguments passed to the program.
+ * @argv: Array containing the arguments passed to the program.
  *
- * Return: 0 on success, 1 on error.
+ * takes 2 numeric strings as arguments, multiplies
+ * them and prints the result.
+ * If the arguments are not numeric,strings or
+ * not exactly two arguments, prints an error message.
+ *
+ * Return: 0 if the program executed successfully, 1 if there's an error.
  */
 int main(int argc, char *argv[])
 {
-	char *num1, *num2;
-	int total_len, i, *product, has_printed_digit = 0;
+	char *num_str1, *num_str2;
+	int len_str1, len_str2, total_length, idx, carry,
+	num1_digit, num2_digit, *product, is_nonzero_found = 0;
 
-	if (argc != 3 || !contains_only_digits(argv[1]) ||
-	!contains_only_digits(argv[2]))
-		print_error_and_exit();
+	num_str1 = argv[1];
+	num_str2 = argv[2];
 
-	num1 = argv[1];
-	num2 = argv[2];
+	if (argc != 3 || !is_digit(num_str1) || !is_digit(num_str2))
+		errors();
 
-	total_len = string_length(num1) + string_length(num2) + 1;
-	product = malloc(sizeof(int) * total_len);
+	len_str1 = _strlen(num_str1);
+	len_str2 = _strlen(num_str2);
+	total_length = len_str1 + len_str2 + 1;
+
+	product = malloc(sizeof(int) * total_length);
 	if (!product)
 		return (1);
 
-	for (i = 0; i <= total_len; i++)
-		product[i] = 0;
+	for (idx = 0; idx <= len_str1 + len_str2; idx++)
+		product[idx] = 0;
 
-	multiply_numbers(num1, num2, product);
-
-	for (i = 0; i < total_len - 1; i++)
+	for (len_str1 = len_str1 - 1; len_str1 >= 0; len_str1--)
 	{
-		if (product[i])
-			has_printed_digit = 1;
-		if (has_printed_digit)
-			_putchar(product[i] + '0');
+		num1_digit = num_str1[len_str1] - '0';
+		carry = 0;
+		for (len_str2 = _strlen(num_str2) - 1; len_str2 >= 0; len_str2--)
+		{
+			num2_digit = num_str2[len_str2] - '0';
+			carry += product[len_str1 + len_str2 + 1] + (num1_digit * num2_digit);
+			product[len_str1 + len_str2 + 1] = carry % 10;
+			carry /= 10;
+		}
+		if (carry > 0)
+			product[len_str1 + len_str2 + 1] += carry;
 	}
-	if (!has_printed_digit)
+
+	for (idx = 0; idx < total_length - 1; idx++)
+	{
+		if (product[idx])
+			is_nonzero_found = 1;
+		if (is_nonzero_found)
+			_putchar(product[idx] + '0');
+	}
+	if (!is_nonzero_found)
 		_putchar('0');
 
 	_putchar('\n');
