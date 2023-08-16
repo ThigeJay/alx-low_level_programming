@@ -9,10 +9,20 @@
  * Description: The function early - returns if either 'name' or the function pointer 'f' is NULL.
  * Return: None/void
  **/
-void print_name(char *name, void (*f)(char *))
-{
+void print_name(char *name, void (*f)(char *)) {
 	if (name == NULL || f == NULL)
 		return;
 
 	f(name);
 }
+
+void simple_print(char *str) {
+	printf("%s\n", str);
+}
+
+int main() {
+	char myName[] = "Thige";
+	print_name(myName, simple_print);
+	return (0);
+}
+
