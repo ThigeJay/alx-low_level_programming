@@ -3,35 +3,35 @@
 
 /**
  * print_strings - prints strings followed by a new line.
- * @separator:  string to be printed.
- * @n: number of strings passed
+ * @delimiter: string to separate the output values.
+ * @numStrings: number of strings passed as arguments.
  */
-void print_strings(const char *separator, const unsigned int n, ...)
+void print_strings(const char *delimiter, const unsigned int numStrings, ...)
 {
-	va_list args;
-	unsigned int counter;
-	char *str;
+	va_list stringList;
+	unsigned int currentIndex;
+	char *currentString;
 
-	va_start(args, n);
+	va_start(stringList, numStrings);
 
-	str = va_arg(args, char*);
-	if (str == NULL)
+	currentString = va_arg(stringList, char*);
+	if (currentString == NULL)
 		printf("(nil)");
 	else
-		printf("%s", str);
+		printf("%s", currentString);
 
-	for (counter = 1; counter < n; counter++)
+	for (currentIndex = 1; currentIndex < numStrings; currentIndex++)
 	{
-		if (separator != NULL)
-			printf("%s", separator);
+		if (delimiter != NULL)
+			printf("%s", delimiter);
 
-		str = va_arg(args, char*);
-		if (str == NULL)
+		currentString = va_arg(stringList, char*);
+		if (currentString == NULL)
 			printf("(nil)");
 		else
-			printf("%s", str);
+			printf("%s", currentString);
 	}
 
 	printf("\n");
-	va_end(args);
+	va_end(stringList);
 }

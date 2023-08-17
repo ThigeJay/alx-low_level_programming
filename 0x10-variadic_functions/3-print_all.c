@@ -2,45 +2,45 @@
 #include <stdio.h>
 
 /**
- * print_all - prints anything specified.
- * @format: list of types of arguments passed
+ * print_all - prints various data types based on the format provided.
+ * @formatSpecifier: list of types of arguments passed.
  */
-void print_all(const char * const format, ...)
+void print_all(const char * const formatSpecifier, ...)
 {
-	va_list args;
-	int i = 0;
-	char *sep = "";
-	char *str;
+	va_list listOfArguments;
+	int index = 0;
+	char *separator = "";
+	char *currentString;
 
-	va_start(args, format);
+	va_start(listOfArguments, formatSpecifier);
 
-	while (format && format[i])
+	while (formatSpecifier && formatSpecifier[index])
 	{
-		switch (format[i])
+		switch (formatSpecifier[index])
 		{
 			case 'c':
-				printf("%s%c", sep, va_arg(args, int));
+				printf("%s%c", separator, va_arg(listOfArguments, int));
 				break;
 			case 'i':
-				printf("%s%d", sep, va_arg(args, int));
+				printf("%s%d", separator, va_arg(listOfArguments, int));
 				break;
 			case 'f':
-				printf("%s%f", sep, va_arg(args, double));
+				printf("%s%f", separator, va_arg(listOfArguments, double));
 				break;
 			case 's':
-				str = va_arg(args, char *);
-				if (!str)
-					str = "(nil)";
-				printf("%s%s", sep, str);
+				currentString = va_arg(listOfArguments, char *);
+				if (!currentString)
+					currentString = "(nil)";
+				printf("%s%s", separator, currentString);
 				break;
 			default:
-				i++;
+				index++;
 				continue;
 		}
-		sep = ", ";
-		i++;
+		separator = ", ";
+		index++;
 	}
 
 	printf("\n");
-	va_end(args);
+	va_end(listOfArguments);
 }
