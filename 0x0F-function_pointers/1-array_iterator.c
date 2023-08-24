@@ -6,9 +6,8 @@
  * @size: Number of elements in the array.
  * @action: Pointer to the function to be executed on each array element.
  *
- * Description:
- * Iterates through the array and applies the "action" function on each element.
- * If "array" or "action" is NULL, the function returns without doing anything.
+ * Description: goes through the array and applies the "action"
+ * If "array" or "action" is NULL, the function returns.
  */
 void array_iterator(int *array, size_t size, void (*action)(int))
 {
