@@ -2,27 +2,18 @@
 #include <stdio.h>
 
 /**
- * print_name - Prints a given name using the provided function pointer.
- * @name: The name (string) to be printed.
- * @f: A pointer to a function that handles the printing mechanism.
+ * print_name - Executes a function given as a parameter on a string argument.
+ * @name: String passed as parameter to the function.
+ * @f: Function to be executed on "name".
  *
- * Description: The function early - returns if either 'name' or the function pointer 'f' is NULL.
- * Return: None/void
- **/
-void print_name(char *name, void (*f)(char *)) {
-	if (name == NULL || f == NULL)
+ * Description:
+ * If "name" or "f" is NULL, the function returns without doing anything.
+ * Otherwise, it calls the function "f" with "name" as an argument.
+ */
+void print_name(char *name, void (*f)(char *))
+{
+	if (!name || !f)
 		return;
 
 	f(name);
 }
-
-void simple_print(char *str) {
-	printf("%s\n", str);
-}
-
-int main() {
-	char myName[] = "Thige";
-	print_name(myName, simple_print);
-	return (0);
-}
-
