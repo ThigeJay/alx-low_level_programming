@@ -1,17 +1,22 @@
-#include "3-calc.h"
-#include <stdio.h>
+#include "function_pointers.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include "3-calc.h"
 
 /**
- * main - Entry point.
- * @argc: Argument count.
- * @argv: Argument vector.
- * Return: 0 (success), 98 (wrong number of arguments).
+ * main - Executes simple mathematical operations.
+ * @argc: The count of command-line arguments.
+ * @argv: The command-line arguments.
+ *
+ * Description:
+ * Uses a function pointer to match and execute the correct operation.
+ *
+ * Return: 0 on success, various error codes on failure.
  */
 int main(int argc, char *argv[])
 {
-	int a, b, result;
-	int (*operation)(int, int);
+	int number1, number2;
+	char *operator;
 
 	if (argc != 4)
 	{
@@ -19,24 +24,24 @@ int main(int argc, char *argv[])
 		exit(98);
 	}
 
-	a = atoi(argv[1]);
-	b = atoi(argv[3]);
-	operation = get_op_func(argv[2]);
+	number1 = atoi(argv[1]);
+	operator = argv[2];
+	number2 = atoi(argv[3]);
 
-	if (!operation || (argv[2][1] != '\0'))
+	if (get_op_func(operator) == NULL || operator[1] != '\0')
 	{
 		printf("Error\n");
 		exit(99);
 	}
 
-	if ((argv[2][0] == '/' || argv[2][0] == '%') && b == 0)
+	if ((operator[0] == '/' && number2 == 0) ||
+	    (operator[0] == '%' && number2 == 0))
 	{
 		printf("Error\n");
 		exit(100);
 	}
 
-	result = operation(a, b);
-	printf("%d\n", result);
+	printf("%d\n", get_op_func(operator)(number1, number2));
 
 	return (0);
 }
