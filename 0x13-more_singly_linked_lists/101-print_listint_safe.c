@@ -1,18 +1,16 @@
 #include "lists.h"
 #include <stdio.h>
 
-size_t find_loop(const listint_t *head);
+const listint_t *find_start_of_loop(const listint_t *head);
 size_t print_listint_safe(const listint_t *head);
 
 /**
- * find_loop - Identifies the node where a loop starts in a linked list
- *             using Floyd's cycle algorithm.
+ * find_start_of_loop - Detects the start node of a loop in a linked list using Floyd's cycle-finding algorithm.
  * @head: A pointer to the head of the list to check.
  *
- * Return: If there's no loop - NULL.
- *         Otherwise - the address of the node where the loop starts.
+ * Return: A pointer to the start of the loop, or NULL if there's no loop.
  */
-const listint_t *find_loop(const listint_t *head)
+const listint_t *find_start_of_loop(const listint_t *head)
 {
 	const listint_t *tortoise = head, *hare = head;
 
@@ -22,45 +20,45 @@ const listint_t *find_loop(const listint_t *head)
 		hare = hare->next->next;
 
 		if (tortoise == hare)
+		{
+			tortoise = head;
+			while (tortoise != hare)
+			{
+				tortoise = tortoise->next;
+				hare = hare->next;
+			}
 			return (tortoise);
+		}
 	}
 
 	return (NULL);
 }
 
 /**
- * print_listint_safe - Safely prints a listint_t list.
+ * print_listint_safe - Safely prints a listint_t list that can have loops.
  * @head: A pointer to the head of the listint_t list to print.
  *
- * Return: The number of nodes in the list.
+ * Return: The number of nodes printed.
  */
 size_t print_listint_safe(const listint_t *head)
 {
 	size_t nodes = 0;
 	const listint_t *loop_start;
 
-	loop_start = find_loop(head);
+	loop_start = find_start_of_loop(head);
 
-	if (!loop_start)
+	while (head && (head != loop_start || nodes == 0))
 	{
-		while (head)
-		{
-			printf("[%p] %d\n", (void *)head, head->n);
-			head = head->next;
-			nodes++;
-		}
-	}
-	else
-	{
-		while (head != loop_start)
-		{
-			printf("[%p] %d\n", (void *)head, head->n);
-			head = head->next;
-			nodes++;
-		}
-		printf("-> [%p] %d\n", (void *)head, head->n);
+		printf("[%p] %d\n", (void *)head, head->n);
 		nodes++;
+		head = head->next;
+
+		if (head == loop_start && nodes != 0)
+			printf("-> [%p] %d\n", (void *)head, head->n);
 	}
+
+	if (!head)
+		exit(98);
 
 	return (nodes);
 }
