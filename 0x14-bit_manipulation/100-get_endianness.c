@@ -7,16 +7,8 @@
  */
 int get_endianness(void)
 {
-	union
-	{
-		unsigned int i;
-		char c[sizeof(unsigned int)];
-	} check;
+	unsigned int index = 1;
+	char *c = (char *) &index;
 
-	check.i = 1;
-
-	if (check.c[0] == 1)
-		return (1);
-	else
-		return (0);
+	return (*c);
 }
