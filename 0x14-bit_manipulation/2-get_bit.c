@@ -1,4 +1,4 @@
-nclude "main.h"
+include "main.h"
 
 /**
  *  * @brief Returns the value of a bit at a given index.
