@@ -1,4 +1,4 @@
-include "main.h"
+#include "main.h"
 
 /**
  *  * @brief Checks the endianness of the system.
