@@ -1,13 +1,14 @@
 #include "main.h"
 
 /**
- *print_binary - Prints the binary representation of a number.
- *@n: The number.
+ * print_binary - Prints the binary representation of a number.
+ * @n: The number to print in binary.
  */
 void print_binary(unsigned long int n)
 {
-	unsigned long int new = 1;
-	int started = 0;
+	unsigned long int mask = 1;
+	int bits = sizeof(unsigned long int) * 8;
+	int flag = 0;
 
 	if (n == 0)
 	{
@@ -15,19 +16,16 @@ void print_binary(unsigned long int n)
 		return;
 	}
 
-	new <<= ((sizeof(unsigned long int) * 8) - 1);
-
-	while (new)
+	for (bits--; bits >= 0; bits--)
 	{
-		if (n & new)
+		if ((n >> bits) & 1)
 		{
 			_putchar('1');
-			started = 1;
+			flag = 1;
 		}
-		else if (started)
+		else if (flag)
 		{
 			_putchar('0');
 		}
-		new >>= 1;
 	}
 }
