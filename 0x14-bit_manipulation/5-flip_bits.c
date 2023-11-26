@@ -1,23 +1,31 @@
 #include "main.h"
 
 /**
- *  * @brief Returns the number of bits to flip to get from one number to another.
- *   * 
- *    * @param n First number.
- *     * @param m Second number.
- *      * @return The number of bits to flip.
- *       */
+ * flip_bits - Calculates the number of bits to flip.
+ *
+ * @n: The first number.
+ * @m: The second number.
+ *
+ * Return: The number of bits needed to flip.
+ */
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
 {
-		unsigned long int xor_res = n ^ m;
-			unsigned int count = 0;
+	/* Calculate the bitwise XOR of the two numbers */
+	unsigned long int xor_result = n ^ m;
 
-				while (xor_res)
-						{
-									count += (xor_res & 1);
-											xor_res >>= 1;
-												}
+	/* Count the number of set bits (1s) in the XOR result */
+	unsigned int bit_count = 0;
 
-					return count;
+	/* Iterate through each bit in the XOR result */
+	while (xor_result)
+	{
+		/* Increment the count for each set bit */
+		bit_count += (xor_result & 1);
+
+		/* Right-shift to check the next bit */
+		xor_result >>= 1;
+	}
+
+	/* Return the total count of set bits (flipped bits) */
+	return (bit_count);
 }
-
